@@ -5,25 +5,31 @@
 }
 
 <h2>Ürün Listesi</h2>
+<form style="float:right" action="/Products/Ekle">
+    <label > Kayıt Ekle: </label>
+    <input  type="submit" name="Ekle" value="Ekle" />
+</form>
+
 <table class="table table-bordered table-hover">
     <tr>
         <th>Id</th>
         <th>Ad</th>
         <th>Fiyat</th>
         <th>Satilamaz</th>
+
         <th>Güncelle</th>
         <th>Sil</th>
     </tr>
     
     @foreach (var item in Model.ulist)
     {
-    <tr>
-        <td> @item.UrunId </td>
-        <td> @item.UrunAd </td>
-        <td> @item.BirimFiyat </td>
-        <td> @item.Satılamaz </td>
-        <td> <a href="/Products/Guncelle">Güncelle</a></td>
-        <td> <a href="/Products/Sil">Sil</a></td>
-    </tr>
+<tr>
+    <td> @item.UrunId </td>
+    <td> @item.UrunAd </td>
+    <td> @item.BirimFiyat </td>
+    <td> @item.Satılamaz </td>
+    <td> <a href="/Products/Update/@item.UrunId">Güncelle</a></td>
+    <td> <a href="/Products/Sil/@item.UrunId">Sil</a></td>
+</tr>
     }
 </table>

@@ -13,13 +13,15 @@ namespace NwServices
     public interface IServiceProduct
     {
         [OperationContract]
+        void EntryProduct(Urunler urun);
+        [OperationContract]
         ICollection<Urunler> GetProducts(int SupplierId, string Role);
         [OperationContract]
-        Urunler[] GetProductsWin();
+        ICollection<Urunler> GetProductsWin();
         [OperationContract]
         void DeleteProducts(int id);
         [OperationContract]
-        void UpdatePriceANDName(int id, decimal fiyat, string name);
+        void UpdatePriceANDName(int id, decimal? fiyat, string name);
         [OperationContract]
         Urunler FindProducts(int id);
         [OperationContract]

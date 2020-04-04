@@ -22,21 +22,52 @@ namespace WebClientt.Controllers
                 Session["Role"].ToString()).ToList();
             return View(pmodel);
         }
-        
-        public ActionResult Guncelle(int id,decimal fiyat,string name)
+
+        [HttpGet]
+        public ActionResult Update(int id)
         {
-           service.UpdatePriceANDName(id,fiyat,name);
-            return View();
+            pmodel.SecUrun = service.FindProducts(id);
+            return View(pmodel);
         }
+        [HttpPost]
+        public ActionResult Update(ProductsModel model)
+        {
+            service.UpdatePriceANDName(model.SecUrun.UrunId, model.SecUrun.BirimFiyat, model.SecUrun.UrunAd);
+            return RedirectToAction("Products");
+        }
+        //[HttpGet]
+        //public ActionResult Sil(int id)
+        //{
+        //    pmodel.SecUrun = service.FindProducts(id);
+        //    return View(pmodel);
+        //}
+  
         public ActionResult Sil(int id)
         {
             service.DeleteProducts(id);
-            return View();
+            return RedirectToAction("Products");
         }
-        public ActionResult Ara(int id)
+        [HttpGet]
+        public ActionResult Ekle()
+        {   
+            return View(pmodel.SecUrun);;
+        }
+        [HttpPost]
+        public ActionResult Ekle(ProductsModel model)
         {
-            service.FindProducts(id);
-            return View();
+            service.EntryProduct(model.SecUrun);
+            return RedirectToAction("Products");
+        }
+        public ActionResult Ara(ProductsModel model,string name)
+        {
+        //   int id = pmodel.ulist.Select(x => x.UrunId)();
+          Urunler urun = service.FindProducts(model.Urun.UrunId);
+            if (urun != null)
+            {
+                Session["ProductName"] = urun.UrunAd;
+                pmodel.SecUrun = service.FindProducts(model.SecUrun.UrunId);
+            }
+            return RedirectToAction("Products", "Products");
         }
     }
 }

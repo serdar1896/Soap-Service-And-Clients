@@ -13,6 +13,19 @@ namespace NwServices
     {
         NorthwindEntities  db = new NorthwindEntities();
 
+        public void EntryProduct(Urunler urun)
+        {
+            Products p = new Products();
+            Categories c = new Categories();
+           // p.ProductID = Convert.ToInt32( db.Products.Select(x=>x.ProductID).Count())+1;
+            p.Discontinued = false;
+            p.UnitPrice = urun.BirimFiyat;
+            p.ProductName = urun.UrunAd;
+            p.SupplierID = urun.TedarikciId;
+            p.Categories.CategoryName = urun.KategoriAd;
+            db.Entry(p).State = System.Data.Entity.EntityState.Added;
+            db.SaveChanges();
+        }
         public void DeleteProducts(int id)
         {
             Products p = db.Products.Find(id);
@@ -20,7 +33,7 @@ namespace NwServices
             db.Entry(p).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
         }
-        public void UpdatePriceANDName(int id, decimal fiyat, string name)
+        public void UpdatePriceANDName(int id, decimal? fiyat, string name)
         {
             Products p = db.Products.Find(id);
             p.UnitPrice = fiyat;
@@ -28,8 +41,8 @@ namespace NwServices
             db.SaveChanges();
         }
         public Urunler FindProducts(int id)
-        {
-            Urunler u = new Urunler();
+        {           
+            Urunler u = new Urunler();           
             Products p = db.Products.Find(id);
             u.UrunId = p.ProductID;
             u.UrunAd = p.ProductName;
@@ -41,6 +54,8 @@ namespace NwServices
         }
         public ICollection<Urunler> GetProducts(int SuplierId, string Role)
         {
+            //db.Configuration.LazyLoadingEnabled = false;
+            //db.Configuration.ProxyCreationEnabled = false;
             if (Role == "Kamu")
             {
                 return db.Products.Select(x => new Urunler
@@ -68,9 +83,9 @@ namespace NwServices
                 }).Where(x => x.Satılamaz == false && x.TedarikciId == SuplierId).ToList();
             }
         }
-        public Urunler[] GetProductsWin()
+        public ICollection<Urunler>  GetProductsWin()
         {
-            Urunler[] ulist = db.Products.Select(x => new Urunler
+            List<Urunler> ulist = db.Products.Select(x => new Urunler
             {
                 Satılamaz = x.Discontinued,
                 KategoriAd = x.Categories.CategoryName,
@@ -80,7 +95,7 @@ namespace NwServices
                 UrunAd = x.ProductName,
                 UrunId = x.ProductID
 
-            }).OrderBy(y => y.UrunId).ToArray(); //array her yerde geçerli
+            }).Where(x => x.Satılamaz == false).OrderBy(y => y.UrunId).ToList(); 
             return ulist;
 
         }

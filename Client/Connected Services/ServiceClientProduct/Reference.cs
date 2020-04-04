@@ -15,6 +15,12 @@ namespace Client.ServiceClientProduct {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceClientProduct.IServiceProduct")]
     public interface IServiceProduct {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProduct/EntryProduct", ReplyAction="http://tempuri.org/IServiceProduct/EntryProductResponse")]
+        void EntryProduct(Data.Urunler urun);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProduct/EntryProduct", ReplyAction="http://tempuri.org/IServiceProduct/EntryProductResponse")]
+        System.Threading.Tasks.Task EntryProductAsync(Data.Urunler urun);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProduct/GetProducts", ReplyAction="http://tempuri.org/IServiceProduct/GetProductsResponse")]
         Data.Urunler[] GetProducts(int SupplierId, string Role);
         
@@ -34,10 +40,10 @@ namespace Client.ServiceClientProduct {
         System.Threading.Tasks.Task DeleteProductsAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProduct/UpdatePriceANDName", ReplyAction="http://tempuri.org/IServiceProduct/UpdatePriceANDNameResponse")]
-        void UpdatePriceANDName(int id, decimal fiyat, string name);
+        void UpdatePriceANDName(int id, System.Nullable<decimal> fiyat, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProduct/UpdatePriceANDName", ReplyAction="http://tempuri.org/IServiceProduct/UpdatePriceANDNameResponse")]
-        System.Threading.Tasks.Task UpdatePriceANDNameAsync(int id, decimal fiyat, string name);
+        System.Threading.Tasks.Task UpdatePriceANDNameAsync(int id, System.Nullable<decimal> fiyat, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceProduct/FindProducts", ReplyAction="http://tempuri.org/IServiceProduct/FindProductsResponse")]
         Data.Urunler FindProducts(int id);
@@ -79,6 +85,14 @@ namespace Client.ServiceClientProduct {
                 base(binding, remoteAddress) {
         }
         
+        public void EntryProduct(Data.Urunler urun) {
+            base.Channel.EntryProduct(urun);
+        }
+        
+        public System.Threading.Tasks.Task EntryProductAsync(Data.Urunler urun) {
+            return base.Channel.EntryProductAsync(urun);
+        }
+        
         public Data.Urunler[] GetProducts(int SupplierId, string Role) {
             return base.Channel.GetProducts(SupplierId, Role);
         }
@@ -103,11 +117,11 @@ namespace Client.ServiceClientProduct {
             return base.Channel.DeleteProductsAsync(id);
         }
         
-        public void UpdatePriceANDName(int id, decimal fiyat, string name) {
+        public void UpdatePriceANDName(int id, System.Nullable<decimal> fiyat, string name) {
             base.Channel.UpdatePriceANDName(id, fiyat, name);
         }
         
-        public System.Threading.Tasks.Task UpdatePriceANDNameAsync(int id, decimal fiyat, string name) {
+        public System.Threading.Tasks.Task UpdatePriceANDNameAsync(int id, System.Nullable<decimal> fiyat, string name) {
             return base.Channel.UpdatePriceANDNameAsync(id, fiyat, name);
         }
         

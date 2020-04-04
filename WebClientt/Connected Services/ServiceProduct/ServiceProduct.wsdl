@@ -7,6 +7,12 @@
       <xsd:import schemaLocation="http://localhost:2741/ServiceProduct.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Data" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IServiceProduct_EntryProduct_InputMessage">
+    <wsdl:part name="parameters" element="tns:EntryProduct" />
+  </wsdl:message>
+  <wsdl:message name="IServiceProduct_EntryProduct_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EntryProductResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceProduct_GetProducts_InputMessage">
     <wsdl:part name="parameters" element="tns:GetProducts" />
   </wsdl:message>
@@ -44,6 +50,10 @@
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
   <wsdl:portType name="IServiceProduct">
+    <wsdl:operation name="EntryProduct">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceProduct/EntryProduct" message="tns:IServiceProduct_EntryProduct_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceProduct/EntryProductResponse" message="tns:IServiceProduct_EntryProduct_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetProducts">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceProduct/GetProducts" message="tns:IServiceProduct_GetProducts_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceProduct/GetProductsResponse" message="tns:IServiceProduct_GetProducts_OutputMessage" />
@@ -71,6 +81,15 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceProduct" type="tns:IServiceProduct">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EntryProduct">
+      <soap:operation soapAction="http://tempuri.org/IServiceProduct/EntryProduct" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetProducts">
       <soap:operation soapAction="http://tempuri.org/IServiceProduct/GetProducts" style="document" />
       <wsdl:input>
