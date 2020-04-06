@@ -1,0 +1,21 @@
+1)Projede WCF Library Eklenir(servis katmaný) 
+2)Projede wcf servis application eklenir(Hosting Katmaný)
+3)Hostdaki Iservice.cs ve Servis1.svc.cs dosyalarý silinir.
+4)servis katmanýndaki Iservis.cs ve Service1.cs dosya adlarý projeye göre düzenlenir.
+5)servis katmanýndaki App.configden <system.serviceModel> Tag silinir.Host katmanýndaki 
+web.configden <system.serviceModel>tag silinir.
+6)Host katmanýna servis dll eklenir.
+7)Servis1.scv dosyasý düzenlenir.
+	Debug="true"
+	Language="C#"
+	CodeBehind="Service1.svc.cs" silinir.
+	Service="Servis.ServiceName" düzenlenir(ProjeName.ServiceName) isim Rename edilir.
+8)svc uzantýlý dosya web de görüntülenir.
+9)MetaData publishing for this service is currently disabled. hatasý 10. ve 11. adýmda düzeltilir.
+10)
+	Hostdaki Properties Web deki project url not alýnýr.
+	Hostdaki web.config sað click edit wcf configuration ile 
+		<system.serviceModel> tekrar oluþturulur.Yalnýz Host tarafýnda oluþturulur.
+11)Web deki yönerge ile düzeltilir.
+
+
